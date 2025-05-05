@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-/**
+/**yennu
  * Class DieRoll - đại diện cho một lần tung nhiều xúc xắc với số mặt và điểm thưởng xác định.
  * 
  * Các thay đổi được refactor gồm:
@@ -164,5 +164,10 @@ class RollResult {
         String output = result.toString();
         LOGGER.log(Level.FINE, "Chuỗi biểu diễn RollResult: {0}", output);
         return output;
+    }
+
+    public RollResult andThen(RollResult result2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'andThen'");
     }
 }

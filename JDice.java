@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.*;
 
-/*
+/*vanquy
 JDice: Java Dice Rolling Program
 Copyright (C) 2006 Andrew D. Hilton  (adhilton@cis.upenn.edu)
 
@@ -30,7 +30,8 @@ public class JDice {
     // Thêm Logger để ghi log sự kiện & lỗi
     private static final Logger LOGGER = Logger.getLogger(JDice.class.getName());
 
-    static final String CLEAR = "Clear";
+    static final String CMD_CLEAR = "Clear";
+
     static final String ROLL = "Roll Selection";
 
     static void showError(String s) {
@@ -103,7 +104,7 @@ public class JDice {
             int[] selectionIndices = new int[start + v.size()];
             for (int i = 0; i < v.size(); i++) {
                 DieRoll dr = v.get(i);
-                RollResult rr = dr.makeRoll();
+                RollResult rr = dr.roll();
                 String toAdd = prepend + dr + "  =>  " + rr;
                 listItems.add(i + start, toAdd);
             }

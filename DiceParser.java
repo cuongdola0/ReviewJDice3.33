@@ -1,5 +1,25 @@
 import java.util.*;
 import java.util.logging.*;
+/*trung kien
+JDice: Java Dice Rolling Program
+Copyright (C) 2006 Andrew D. Hilton  (adhilton@cis.upenn.edu)
+
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+ */
 
 /**
  * A parser for dice expressions such as "2d6+3; d10 & 3d4".
@@ -25,19 +45,16 @@ public class DiceParser {
         rootLogger.addHandler(consoleHandler);
         logger.setLevel(Level.FINE);
     }
-
-    /**
+	 /**
      * StringStream là một lớp hỗ trợ để quản lý chuỗi đầu vào trong việc phân tích cú pháp.
      * Nó bao gồm các phương thức để cắt bỏ khoảng trắng, lấy số nguyên, và kiểm tra các biểu thức.
      */
     private static class StringStream {
         StringBuffer buff;
-
-        public StringStream(String s) {
+		public StringStream(String s) {
             buff = new StringBuffer(s);
         }
-
-        private void munchWhiteSpace() {
+		private void munchWhiteSpace() {
             int index = 0;
             char curr;
             while (index < buff.length()) {
@@ -48,8 +65,7 @@ public class DiceParser {
             }
             buff = buff.delete(0, index);
         }
-
-        public boolean isEmpty() {
+		public boolean isEmpty() {
             munchWhiteSpace();
             return buff.toString().equals("");
         }
@@ -57,8 +73,7 @@ public class DiceParser {
         public Integer getInt() {
             return readInt();
         }
-
-        public Integer readInt() {
+		public Integer readInt() {
             int index = 0;
             char curr;
             munchWhiteSpace();
@@ -76,8 +91,7 @@ public class DiceParser {
                 return null;
             }
         }
-
-        public Integer readSgnInt() {
+		public Integer readSgnInt() {
             munchWhiteSpace();
             StringStream state = save();
             if (checkAndEat("+")) {
@@ -117,9 +131,8 @@ public class DiceParser {
         public String toString() {
             return buff.toString();
         }
-    }
-
-    /**
+	}
+		/**
      * Parses a full dice expression with optional ";" separated parts.
      * 
      * @param input Chuỗi biểu thức xúc xắc (ví dụ: "2d6+3; d10 & 3d4")
@@ -136,9 +149,8 @@ public class DiceParser {
             logger.warning("Failed to fully parse input: " + input);
             return null;
         }
-    }
-
-    /**
+	}
+		/**
      * Parse phần roll của biểu thức xúc xắc, sử dụng đệ quy nếu có dấu phân cách ";"
      * 
      * @param ss Chuỗi đầu vào
@@ -155,16 +167,15 @@ public class DiceParser {
             return parseRollRecursive(ss, v);
         }
         return v;
-    }
-
-    /**
+	}
+		 /**
      * Parse phần xúc xắc trong biểu thức, có thể có số lượng xúc xắc lặp lại (X)
      * 
      * @param ss Chuỗi đầu vào
      * @return Danh sách DieRoll
      */
-    private static Vector<DieRoll> parseXDice(StringStream ss) {
-        StringStream saved = ss.save();
+	private static Vector<DieRoll> parseXDice(StringStream ss) {
+		StringStream saved = ss.save();
         Integer x = ss.getInt();
         int num = (x == null) ? 1 : x;
         if (ss.checkAndEat("x")) {
@@ -182,25 +193,25 @@ public class DiceParser {
         }
         return ans;
     }
-
-    /**
-     * Parse phần dice của biểu thức xúc xắc.
+	/**
+	 * Parse phần dice của biểu thức xúc xắc.
      * 
      * @param ss Chuỗi đầu vào
      * @return DieRoll đã phân tích hoặc null nếu lỗi
-     */
-    private static DieRoll parseDice(StringStream ss) {
+	 */
+	private static DieRoll parseDice(StringStream ss) {
         return parseDTail(parseDiceInner(ss), ss);
     }
-
-    /**
+	 /**
      * Parse phần dice cơ bản trong biểu thức xúc xắc, bao gồm số xúc xắc và số mặt.
-     * 
      * @param ss Chuỗi đầu vào
      * @return DieRoll đã phân tích hoặc null nếu lỗi
      */
     private static DieRoll parseDiceInner(StringStream ss) {
-        Integer num = ss.getInt();
+		Integer num = ss.getInt();
+		if (num == null) {
+			return null;  
+		}
         int ndice = (num == null) ? 1 : num;
         if (ss.checkAndEat("d")) {
             num = ss.getInt();
@@ -215,8 +226,7 @@ public class DiceParser {
             return null;
         }
     }
-
-    /**
+	/**
      * Kiểm tra phần tail của biểu thức xúc xắc (sử dụng toán tử '&' nối nhiều dice)
      * 
      * @param r1 DieRoll đầu tiên
@@ -234,8 +244,7 @@ public class DiceParser {
             return r1;
         }
     }
-
-    /**
+	 /**
      * Test method to evaluate expressions with logging and output.
      * 
      * @param input Biểu thức xúc xắc để test
@@ -256,7 +265,7 @@ public class DiceParser {
      * Main method để kiểm thử nhanh các biểu thức dice.
      */
     public static void main(String[] args) {
-        test("d6");
+		test("d6");
         test("2d6");
         test("d6+5");
         test("4X3d8-5");

@@ -1,15 +1,25 @@
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+/**quoccuong
+ * Lớp DiceSum mở rộng từ DieRoll, đại diện cho phép cộng kết quả của hai lần tung xúc xắc.
+ * Lớp này sử dụng hai đối tượng DieRoll r1 và r2, và cho phép kết hợp kết quả.
+ */
 public class DiceSum extends DieRoll {
     private static final Logger logger = Logger.getLogger(DiceSum.class.getName());
 
-    private DieRoll r1;
-    private DieRoll r2;
+    private final DieRoll r1;
+    private final DieRoll r2;
 
-    // Constructor có thêm kiểm tra null (validation)
+    /**
+     * Constructor khởi tạo DiceSum từ hai đối tượng DieRoll.
+     *
+     * @param r1 Đối tượng DieRoll thứ nhất, không được null
+     * @param r2 Đối tượng DieRoll thứ hai, không được null
+     * @throws IllegalArgumentException nếu r1 hoặc r2 null
+     */
     public DiceSum(DieRoll r1, DieRoll r2) {
-        super(0, 0, 0); // Giả định DieRoll có constructor này
+        super(0, 0, 0); // Thông tin không dùng, vì DiceSum dùng composition
 
         if (r1 == null || r2 == null) {
             logger.severe("One or both DieRoll objects are null.");
@@ -22,15 +32,19 @@ public class DiceSum extends DieRoll {
         logger.info("DiceSum initialized with two DieRoll objects.");
     }
 
-    // Ghi đè phương thức makeRoll
+    /**
+     * Thực hiện hai lần tung xúc xắc và kết hợp kết quả.
+     *
+     * @return RollResult kết hợp từ r1 và r2
+     */
     @Override
-    public RollResult makeRoll() {
+    public RollResult roll() {
         logger.info("makeRoll() called in DiceSum.");
 
-        RollResult result1 = r1.makeRoll();
+        RollResult result1 = r1.roll();
         logger.fine("First roll result: " + result1);
 
-        RollResult result2 = r2.makeRoll();
+        RollResult result2 = r2.roll();
         logger.fine("Second roll result: " + result2);
 
         RollResult combined = result1.andThen(result2);
@@ -39,15 +53,22 @@ public class DiceSum extends DieRoll {
         return combined;
     }
 
-    // ✅ Helper method: Tính tổng điểm từ makeRoll()
+    /**
+     * Phương thức tiện ích: Trả về tổng điểm của hai lần tung.
+     *
+     * @return tổng điểm (int)
+     */
     public int getTotalRollValue() {
-        RollResult result = makeRoll();
-        return result.getTotal(); // Giả định RollResult có phương thức getTotal()
+        return roll().getTotal();
     }
 
-    // ✅ Thông báo cải tiến rõ ràng hơn cho người dùng
+    /**
+     * Trả về chuỗi mô tả kết quả DiceSum bao gồm hai lần tung và tổng điểm.
+     *
+     * @return chuỗi mô tả
+     */
     @Override
     public String toString() {
-        return "DiceSum Result: [" + r1.toString() + "] + [" + r2.toString() + "] = Total: " + getTotalRollValue();
+        return "DiceSum: [" + r1.toString() + "] + [" + r2.toString() + "] => Total: " + getTotalRollValue();
     }
 }
