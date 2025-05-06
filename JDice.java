@@ -29,8 +29,8 @@ public class JDice {
 
     // Thêm Logger để ghi log sự kiện & lỗi
     private static final Logger LOGGER = Logger.getLogger(JDice.class.getName());
+    static final String CMD_CLEAR = new String("Clear");
 
-    static final String CMD_CLEAR = "Clear";
 
     static final String ROLL = "Roll Selection";
 
