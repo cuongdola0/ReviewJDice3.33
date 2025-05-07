@@ -38,16 +38,16 @@ public class DiceSum extends DieRoll {
      * @return RollResult kết hợp từ r1 và r2
      */
     @Override
-    public RollResult roll() {
+    public RollResult makeRoll() {
         logger.info("makeRoll() called in DiceSum.");
 
-        RollResult result1 = r1.roll();
+        RollResult result1 = r1.makeRoll();
         logger.fine("First roll result: " + result1);
 
-        RollResult result2 = r2.roll();
+        RollResult result2 = r2.makeRoll();
         logger.fine("Second roll result: " + result2);
 
-        RollResult combined = result1.andThen(result2);
+        RollResult combined = result1.addResult(result2);
         logger.info("Combined roll result: " + combined);
 
         return combined;
@@ -59,11 +59,10 @@ public class DiceSum extends DieRoll {
      * @return tổng điểm (int)
      */
     public int getTotalRollValue() {
-        return roll().getTotal();
+        return makeRoll().getTotal();
     }
 
     /**
-     * Trả về chuỗi mô tả kết quả DiceSum bao gồm hai lần tung và tổng điểm.
      *
      * @return chuỗi mô tả
      */

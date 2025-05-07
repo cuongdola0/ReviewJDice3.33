@@ -104,7 +104,7 @@ public class JDice {
             int[] selectionIndices = new int[start + v.size()];
             for (int i = 0; i < v.size(); i++) {
                 DieRoll dr = v.get(i);
-                RollResult rr = dr.roll();
+                RollResult rr = dr.makeRoll();
                 String toAdd = prepend + dr + "  =>  " + rr;
                 listItems.add(i + start, toAdd);
             }
@@ -153,7 +153,7 @@ public class JDice {
 
         JPanel rightSide = new JPanel();
         rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
-        String[] buttons = {ROLL, "d4", "d6", "d8", "d10", "d12", "d20", "d100", CLEAR};
+        String[] buttons = {ROLL, "d4", "d6", "d8", "d10", "d12", "d20", "d100", Clear};
 
         for (String button : buttons) {
             JButton newButton = new JButton(button);

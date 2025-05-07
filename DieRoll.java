@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**yennu
  * Class DieRoll - đại diện cho một lần tung nhiều xúc xắc với số mặt và điểm thưởng xác định.
@@ -53,7 +52,7 @@ public class DieRoll {
      * 
      * @return Kết quả của lần tung, chứa danh sách các giá trị ngẫu nhiên từ 1 đến numSides và điểm thưởng
      */
-    public RollResult roll() {
+    public RollResult makeRoll() {
         LOGGER.log(Level.FINE, "Bắt đầu tung {0} xúc xắc {1} mặt", new Object[]{numDice, numSides});
         RollResult r = new RollResult(bonus);
         for (int i = 0; i < numDice; i++) {
@@ -164,10 +163,5 @@ class RollResult {
         String output = result.toString();
         LOGGER.log(Level.FINE, "Chuỗi biểu diễn RollResult: {0}", output);
         return output;
-    }
-
-    public RollResult andThen(RollResult result2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'andThen'");
     }
 }
